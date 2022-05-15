@@ -1,3 +1,4 @@
+import 'package:chat_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        primaryColor: Color(0xff14213D),
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -24,11 +26,12 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         // primarySwatch: Colors.blue,
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: Color(0x14213D),
-          secondary: Color(0xFFFFFF),
+          // primary: Color(0x14213D),
+          secondary: Color(0xffFFFFFF),
+          secondaryContainer: Color(0x5b434d64),
         ),
       ),
-      home: const MyHomePage(title: 'Messages'),
+      home: HomeScreen(),
     );
   }
 }
