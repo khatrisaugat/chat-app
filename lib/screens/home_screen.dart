@@ -1,3 +1,5 @@
+import 'package:chat_app/models/message_model.dart';
+import 'package:chat_app/models/user_model.dart';
 import 'package:chat_app/widgets/recent_chats.dart';
 import 'package:flutter/material.dart';
 
@@ -23,18 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: AppBar(
                   centerTitle: true,
-                  leading: Ink(
-                    child: IconButton(
-                      icon: Icon(Icons.menu),
-                      iconSize: 28.0,
-                      onPressed: () {},
-                    ),
-                    decoration: ShapeDecoration(
-                      shape: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: BorderSide.none),
-                      color: Theme.of(context).colorScheme.secondaryContainer,
-                    ),
+                  leading: CircleAvatar(
+                    backgroundImage: AssetImage(steven.imageUrl),
+                    radius: 25.0,
                   ),
                   title: Text(
                     "Messages",

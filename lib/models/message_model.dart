@@ -101,7 +101,7 @@ List<Message> chats = [
     isLiked: false,
     unread: true,
     roomId: 2,
-    roomName: "anika",
+    roomName: "Bruce",
     creator: steven,
   ),
   Message(
@@ -112,7 +112,7 @@ List<Message> chats = [
     isLiked: false,
     unread: true,
     roomId: 3,
-    roomName: "anika",
+    roomName: "Jin",
     creator: steven,
   ),
   Message(
@@ -123,7 +123,7 @@ List<Message> chats = [
     isLiked: false,
     unread: true,
     roomId: 4,
-    roomName: "anika",
+    roomName: "Lacey",
     creator: steven,
   ),
   Message(
@@ -134,7 +134,7 @@ List<Message> chats = [
     isLiked: false,
     unread: true,
     roomId: 5,
-    roomName: "anika",
+    roomName: "Michael",
     creator: steven,
   ),
   Message(
@@ -145,18 +145,7 @@ List<Message> chats = [
     isLiked: true,
     unread: false,
     roomId: 6,
-    roomName: "anika",
-    creator: steven,
-  ),
-  Message(
-    id: 7,
-    sender: anika,
-    time: "1:30 PM",
-    text: "Hey!!",
-    isLiked: false,
-    unread: false,
-    roomId: 7,
-    roomName: "anika",
+    roomName: "Lolita",
     creator: steven,
   ),
 ];
