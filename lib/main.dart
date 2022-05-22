@@ -1,4 +1,5 @@
 import 'package:chat_app/screens/home_screen.dart';
+import 'package:chat_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
           secondaryContainer: Color(0x5b434d64),
         ),
       ),
-      home: HomeScreen(),
+      // home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }
