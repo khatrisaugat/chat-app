@@ -31,10 +31,11 @@ final User steven = User(
     imageUrl: "assets/images/Steven.jpg");
 
 final User anika = User(
-    id: 1,
-    name: "Anika",
-    email: "Anika@gmail.com",
-    imageUrl: "assets/images/Anika.jpg");
+  id: 1,
+  name: "Anika",
+  email: "Anika@gmail.com",
+  imageUrl: null,
+);
 
 final User bruce = User(
     id: 2,

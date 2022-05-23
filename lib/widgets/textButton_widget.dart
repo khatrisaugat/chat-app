@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
-class TextButtonWidget extends StatelessWidget {
-  const TextButtonWidget({Key? key}) : super(key: key);
+class TextButtonWidget extends StatefulWidget {
+  @override
+  _TextButtonWidget createState() => _TextButtonWidget();
+  final void Function()? onBtnPressed;
+  const TextButtonWidget(this.onBtnPressed);
+}
+
+class _TextButtonWidget extends State<TextButtonWidget> {
+  // const TextButtonWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +34,7 @@ class TextButtonWidget extends StatelessWidget {
           backgroundColor: Colors.black,
           onSurface: Colors.grey,
         ),
-        onPressed: () {
-          print('Pressed');
-        },
+        onPressed: widget.onBtnPressed,
       ),
     );
   }

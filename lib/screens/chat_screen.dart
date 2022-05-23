@@ -32,8 +32,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   )
                 : CircleAvatar(
                     backgroundImage: AssetImage(
-                      widget.user.imageUrl,
-                    ),
+                        widget.user.imageUrl ?? "assets/images/Jenny.jpg"),
                     radius: 20.0,
                   ),
             Column(

@@ -26,7 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: AppBar(
                   centerTitle: true,
                   leading: CircleAvatar(
-                    backgroundImage: AssetImage(steven.imageUrl),
+                    backgroundImage: AssetImage(
+                        steven.imageUrl ?? "assets/images/Jenny.jpg"),
                     radius: 25.0,
                   ),
                   title: Text(

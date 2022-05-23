@@ -1,9 +1,21 @@
+import 'package:chat_app/services/remote_service.dart';
 import 'package:chat_app/widgets/textButton_widget.dart';
 import 'package:chat_app/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 
 class LoginCard extends StatelessWidget {
-  const LoginCard({Key? key}) : super(key: key);
+  String email;
+  dynamic user;
+  String password;
+  getData() async {
+    print(email);
+    user = await RemoteService()
+        .loginUser("Devilman12345@gmail.com", "Devilman12345");
+    print(user);
+  }
+
+  // ignore: use_key_in_widget_constructors
+  LoginCard({this.email = "", this.password = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +54,26 @@ class LoginCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          TextfieldWidget("Your email", false),
-          TextfieldWidget("Your Password", true),
-          TextButtonWidget(),
+          TextfieldWidget("Your email", false, (value) {
+            // email = value != "" ? value : email;
+            if (value.isNotEmpty) {
+              email = value;
+            }
+          }),
+          TextfieldWidget("Your Password", true, (value) {
+            // password = value != "" ? value : password;
+            if (value.isNotEmpty) {
+              password = value;
+            }
+          }),
+          TextButtonWidget(() {
+            getData();
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                      content: Text(password!),
+                    ));
+          }),
         ],
       ),
     );
