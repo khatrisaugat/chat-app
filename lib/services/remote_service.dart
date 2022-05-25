@@ -21,7 +21,7 @@ class RemoteService {
       },
     );
     if (response.statusCode == 200) {
-      print(body);
+      print(response.body);
       return response.body;
     }
   }

@@ -3,19 +3,24 @@ import 'package:chat_app/widgets/textButton_widget.dart';
 import 'package:chat_app/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 
-class LoginCard extends StatelessWidget {
-  String email;
-  dynamic user;
-  String password;
-  getData() async {
-    print(email);
-    user = await RemoteService()
-        .loginUser("Devilman12345@gmail.com", "Devilman12345");
-    print(user);
-  }
+class LoginCard extends StatefulWidget {
+  _LoginCard createState() => _LoginCard();
+  String email = "";
+  dynamic user = "";
+  String password = "";
+  LoginCard({Key? key}) : super(key: key);
+}
 
-  // ignore: use_key_in_widget_constructors
-  LoginCard({this.email = "", this.password = ""});
+class _LoginCard extends State<LoginCard> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  getData() async {
+    // print(widget.email);
+
+    widget.user = await RemoteService()
+        .loginUser(emailController.text, passwordController.text);
+    print(widget.user);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,24 +59,31 @@ class LoginCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          TextfieldWidget("Your email", false, (value) {
-            // email = value != "" ? value : email;
-            if (value.isNotEmpty) {
-              email = value;
-            }
-          }),
-          TextfieldWidget("Your Password", true, (value) {
-            // password = value != "" ? value : password;
-            if (value.isNotEmpty) {
-              password = value;
-            }
-          }),
+          // TextfieldWidget("Your email", false, (value) {
+          //   // email = value != "" ? value : email;
+          //   if (value != "") {
+          //     widget.email = value;
+          //     print(widget.email);
+          //   }
+          // }),
+          // TextfieldWidget("Your Password", true, (value) {
+          //   // password = value != "" ? value : password;
+          //   if (value != "") {
+          //     widget.password = value;
+          //     print(widget.email);
+          //     print(widget.password);
+          //   }
+          // }),
+          TextfieldWidget("Your email", false, emailController),
+          TextfieldWidget("Your Password", true, passwordController),
           TextButtonWidget(() {
+            print(emailController.text);
+            print(passwordController.text);
             getData();
             showDialog(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
-                      content: Text(password!),
+                      content: Text(widget.password),
                     ));
           }),
         ],
