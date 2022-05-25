@@ -1,3 +1,5 @@
+import 'package:chat_app/models/user_model.dart';
+import 'package:chat_app/screens/home_screen.dart';
 import 'package:chat_app/services/remote_service.dart';
 import 'package:chat_app/widgets/textButton_widget.dart';
 import 'package:chat_app/widgets/textfield_widget.dart';
@@ -6,7 +8,6 @@ import 'package:flutter/material.dart';
 class LoginCard extends StatefulWidget {
   _LoginCard createState() => _LoginCard();
   String email = "";
-  dynamic user = "";
   String password = "";
   LoginCard({Key? key}) : super(key: key);
 }
@@ -17,9 +18,17 @@ class _LoginCard extends State<LoginCard> {
   getData() async {
     // print(widget.email);
 
-    widget.user = await RemoteService()
-        .loginUser(emailController.text, passwordController.text);
-    print(widget.user);
+    // widget.user = await RemoteService()
+    //     .loginUser(emailController.text, passwordController.text);
+    try {
+      User me = await RemoteService()
+          .loginUser(emailController.text, passwordController.text);
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen(me)),
+      );
+    } on Exception catch (_, ex) {}
   }
 
   @override
@@ -77,14 +86,14 @@ class _LoginCard extends State<LoginCard> {
           TextfieldWidget("Your email", false, emailController),
           TextfieldWidget("Your Password", true, passwordController),
           TextButtonWidget(() {
-            print(emailController.text);
-            print(passwordController.text);
+            // print(emailController.text);
+            // print(passwordController.text);
             getData();
-            showDialog(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
-                      content: Text(widget.password),
-                    ));
+            // showDialog(
+            //     context: context,
+            //     builder: (BuildContext context) => AlertDialog(
+            //           content: Text(widget.password),
+            //         ));
           }),
         ],
       ),

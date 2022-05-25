@@ -4,8 +4,10 @@ import 'package:chat_app/widgets/recent_chats.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
+  final User me;
   @override
   _HomeScreenState createState() => _HomeScreenState();
+  HomeScreen(this.me);
 }
 
 class _HomeScreenState extends State<HomeScreen> {
