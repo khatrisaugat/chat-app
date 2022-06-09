@@ -9,4 +9,9 @@ class User {
     required this.email,
     this.imageUrl,
   });
+  String token = "";
+  //set token
+  void setToken(String token) {
+    this.token = token;
+  }
 }

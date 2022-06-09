@@ -2,8 +2,13 @@ import 'package:chat_app/models/message_model.dart';
 import 'package:chat_app/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../models/user_model.dart';
+
 class RecentChats extends StatelessWidget {
-  const RecentChats({Key? key}) : super(key: key);
+  // ignore: use_key_in_widget_constructors
+  RecentChats({required this.messages, required this.user});
+  final List<Message> messages;
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +17,14 @@ class RecentChats extends StatelessWidget {
           // color: Colors.white,
           ),
       child: ListView.builder(
-          itemCount: chats.length,
+          itemCount: messages.length,
           itemBuilder: (BuildContext, index) {
-            final Message chat = chats[index];
+            final Message chat = messages[index];
             return GestureDetector(
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ChatScreen(user: chat.sender),
+                    builder: (_) => ChatScreen(roomId: chat.roomId, user: user),
                   )),
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 1.0),

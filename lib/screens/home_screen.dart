@@ -3,6 +3,8 @@ import 'package:chat_app/models/user_model.dart';
 import 'package:chat_app/widgets/recent_chats.dart';
 import 'package:flutter/material.dart';
 
+import '../services/remote_service.dart';
+
 class HomeScreen extends StatefulWidget {
   final User me;
   @override
@@ -11,6 +13,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late List<Message> _messages = [];
+  @override
+  void initState() {
+    super.initState();
+    getMessages();
+  }
+
+  getMessages() async {
+    List<dynamic> messages = await RemoteService().getMessages(widget.me.token);
+    print(messages);
+    if (messages is List<Message>) {
+      setState(() {
+        _messages = messages.cast<Message>();
+      });
+    } else {
+      print("Error");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +88,11 @@ class _HomeScreenState extends State<HomeScreen> {
               topRight: Radius.circular(30.0),
               topLeft: Radius.circular(30.0),
             )),
-        child: const RecentChats(),
+        child: _messages != null
+            ? RecentChats(messages: _messages, user: widget.me)
+            : Text(
+                "Loading...",
+              ),
       ),
     );
   }

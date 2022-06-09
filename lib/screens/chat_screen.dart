@@ -1,18 +1,43 @@
+import 'dart:ffi';
+
 import 'package:chat_app/models/message_model.dart';
 import 'package:chat_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 
+import '../services/remote_service.dart';
+
 class ChatScreen extends StatefulWidget {
+  final int roomId;
   final User user;
 
   // ignore: use_key_in_widget_constructors
-  const ChatScreen({required this.user});
+  const ChatScreen({required this.roomId, required this.user});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  late List<Message> _messages = [];
+  @override
+  void initState() {
+    super.initState();
+    getMessagesfromARoom();
+  }
+
+  getMessagesfromARoom() async {
+    print("Room id = ${widget.roomId}");
+    List messages = await RemoteService()
+        .getMessagesFromRoom(widget.user.token, widget.roomId);
+    if (messages is List<Message>) {
+      setState(() {
+        _messages = messages.cast<Message>();
+      });
+    } else {
+      print("Error");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _buildMessage(Message message, bool isMe) {
@@ -31,8 +56,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     alignment: Alignment.centerRight,
                   )
                 : CircleAvatar(
-                    backgroundImage: AssetImage(
-                        widget.user.imageUrl ?? "assets/images/Jenny.jpg"),
+                    backgroundImage: AssetImage("assets/images/Jenny.jpg"),
+                    // widget.user.imageUrl ?? "assets/images/Jenny.jpg"),
                     radius: 20.0,
                   ),
             Column(
@@ -127,6 +152,7 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: Colors.white,
         title: Text(
           widget.user.name,
+          // "Room Name",
           style: TextStyle(
             color: Colors.black,
             fontSize: 24.0,
@@ -152,13 +178,13 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 child: ListView.builder(
-                    itemCount: messages.length,
+                    itemCount: _messages.length,
                     itemBuilder: (context, position) {
-                      final Message message = messages[position];
+                      final Message message = _messages[position];
                       final bool isMe =
-                          messages[position].sender.id == widget.user.id
-                              ? false
-                              : true;
+                          _messages[position].sender.id == widget.user.id
+                              ? true
+                              : false;
                       return _buildMessage(message, isMe);
                     }),
               ),

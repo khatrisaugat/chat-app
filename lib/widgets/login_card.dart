@@ -14,6 +14,7 @@ class LoginCard extends StatefulWidget {
 }
 
 class _LoginCard extends State<LoginCard> {
+  bool isLoading = false;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   getData() async {
@@ -21,29 +22,30 @@ class _LoginCard extends State<LoginCard> {
 
     // widget.user = await RemoteService()
     //     .loginUser(emailController.text, passwordController.text);
-    dynamic me = await RemoteService()
-        .loginUser(emailController.text, passwordController.text);
-    if (me is User) {
-      // ignore: use_build_context_synchronously
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen(me)),
-      );
-    } else {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      RemoteService remoteService = RemoteService();
+      dynamic me = await remoteService.loginUser(
+          emailController.text, passwordController.text);
       setState(() {
-        widget.error = me['error'];
+        isLoading = false;
       });
+      if (me is User) {
+        // ignore: use_build_context_synchronously
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen(me)),
+        );
+      } else {
+        setState(() {
+          widget.error = me['error'];
+        });
+      }
+    } catch (e) {
+      print(e);
     }
-    // print(me);
-    // try {
-    //   User me = await RemoteService()
-    //       .loginUser(emailController.text, passwordController.text);
-    //   // ignore: use_build_context_synchronously
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => HomeScreen(me)),
-    //   );
-    // } on Exception catch (_, ex) {}
   }
 
   @override
@@ -111,16 +113,18 @@ class _LoginCard extends State<LoginCard> {
               ),
             ),
           ),
-          TextButtonWidget(() {
-            // print(emailController.text);
-            // print(passwordController.text);
-            getData();
-            // showDialog(
-            //     context: context,
-            //     builder: (BuildContext context) => AlertDialog(
-            //           content: Text(widget.password),
-            //         ));
-          }),
+          isLoading
+              ? Text("Loading...")
+              : TextButtonWidget(() {
+                  // print(emailController.text);
+                  // print(passwordController.text);
+                  getData();
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (BuildContext context) => AlertDialog(
+                  //           content: Text(widget.password),
+                  //         ));
+                }),
         ],
       ),
     );
