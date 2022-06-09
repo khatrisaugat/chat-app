@@ -9,6 +9,7 @@ class LoginCard extends StatefulWidget {
   _LoginCard createState() => _LoginCard();
   String email = "";
   String password = "";
+  String error = "";
   LoginCard({Key? key}) : super(key: key);
 }
 
@@ -20,22 +21,36 @@ class _LoginCard extends State<LoginCard> {
 
     // widget.user = await RemoteService()
     //     .loginUser(emailController.text, passwordController.text);
-    try {
-      User me = await RemoteService()
-          .loginUser(emailController.text, passwordController.text);
+    dynamic me = await RemoteService()
+        .loginUser(emailController.text, passwordController.text);
+    if (me is User) {
       // ignore: use_build_context_synchronously
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen(me)),
       );
-    } on Exception catch (_, ex) {}
+    } else {
+      setState(() {
+        widget.error = me['error'];
+      });
+    }
+    // print(me);
+    // try {
+    //   User me = await RemoteService()
+    //       .loginUser(emailController.text, passwordController.text);
+    //   // ignore: use_build_context_synchronously
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => HomeScreen(me)),
+    //   );
+    // } on Exception catch (_, ex) {}
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 300,
-      height: 300,
+      height: 350,
       padding: EdgeInsets.all(20.0),
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
       decoration: BoxDecoration(
@@ -85,6 +100,17 @@ class _LoginCard extends State<LoginCard> {
           // }),
           TextfieldWidget("Your email", false, emailController),
           TextfieldWidget("Your Password", true, passwordController),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.error,
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontSize: 14.0,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
           TextButtonWidget(() {
             // print(emailController.text);
             // print(passwordController.text);

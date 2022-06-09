@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class RemoteService {
   late final String token;
-  Future<User> loginUser(String email, String password) async {
+  Future<dynamic> loginUser(String email, String password) async {
     var client = http.Client();
     var body = {
       "email": email,
@@ -24,7 +24,7 @@ class RemoteService {
     if (response.statusCode == 200) {
       var decodedJson = jsonDecode(response.body);
       if (decodedJson.containsKey('error')) {
-        throw decodedJson['error'];
+        return decodedJson;
       } else {
         var user = decodedJson['user'];
         token = decodedJson['token'];
@@ -37,7 +37,8 @@ class RemoteService {
         return me;
       }
     } else {
-      throw Error();
+      //handle error of incorrect credentials
+      throw "Incorrect credentials";
     }
   }
 }
