@@ -24,7 +24,12 @@ class RecentChats extends StatelessWidget {
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ChatScreen(roomId: chat.roomId, user: user),
+                    builder: (_) => ChatScreen(
+                        roomId: chat.roomId,
+                        user: user,
+                        chatHeader: (chat.sender.id == user.id
+                            ? chat.creator.name
+                            : chat.sender.name)),
                   )),
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 1.0),
@@ -41,7 +46,9 @@ class RecentChats extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          chat.roomName,
+                          chat.sender.id == user.id
+                              ? chat.creator.name
+                              : chat.sender.name,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
@@ -64,7 +71,30 @@ class RecentChats extends StatelessWidget {
                     SizedBox(
                       width: 16.0,
                     ),
-                    Text(chat.time),
+                    Column(
+                      children: [
+                        Text(chat.time),
+                        chat.unread
+                            ? Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0, vertical: 5.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: Text(
+                                  "New",
+                                  style: TextStyle(
+                                    // backgroundColor: Colors.redAccent,
+                                    color: Colors.white,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            : Text(""),
+                      ],
+                    ),
                   ],
                 ),
               ),

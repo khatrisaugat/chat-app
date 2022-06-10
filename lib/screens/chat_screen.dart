@@ -9,9 +9,11 @@ import '../services/remote_service.dart';
 class ChatScreen extends StatefulWidget {
   final int roomId;
   final User user;
+  final String chatHeader;
 
   // ignore: use_key_in_widget_constructors
-  const ChatScreen({required this.roomId, required this.user});
+  const ChatScreen(
+      {required this.roomId, required this.user, required this.chatHeader});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -19,6 +21,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   late List<Message> _messages = [];
+
   @override
   void initState() {
     super.initState();
@@ -151,7 +154,7 @@ class _ChatScreenState extends State<ChatScreen> {
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(
-          widget.user.name,
+          widget.chatHeader,
           // "Room Name",
           style: TextStyle(
             color: Colors.black,

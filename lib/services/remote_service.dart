@@ -66,11 +66,11 @@ class RemoteService {
       late List<Message> messages = [];
       for (var message in decodedJson) {
         User receiver = await getUser(message['receiver_id'], token);
-        print(receiver);
-        print("message");
+        // print(receiver);
+        // print("message");
         User sender = await getUser(message['sender_id'], token);
-        print(sender);
-        print("message");
+        // print(sender);
+        // print("message");
         messages.add(Message(
           id: message['id'],
           text: message['text'],
@@ -129,15 +129,15 @@ class RemoteService {
     );
     if (response.statusCode == 200) {
       var decodedJson = jsonDecode(response.body);
-      print(decodedJson);
+      // print(decodedJson);
       late List<Message> messages = [];
       for (var message in decodedJson) {
         User receiver = await getUser(message['receiver_id'], token);
-        print(receiver);
-        print("message");
+        // print(receiver);
+        // print("message");
         User sender = await getUser(message['sender_id'], token);
-        print(sender);
-        print("message");
+        // print(sender);
+        // print("message");
         messages.add(Message(
           id: message['id'],
           text: message['text'],
