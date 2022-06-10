@@ -33,8 +33,7 @@ class _LoginCard extends State<LoginCard> {
         isLoading = false;
       });
       if (me is User) {
-        // ignore: use_build_context_synchronously
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen(me)),
         );

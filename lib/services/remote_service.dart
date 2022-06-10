@@ -51,7 +51,7 @@ class RemoteService {
     var client = http.Client();
     var uri = Uri.parse(
         "http://10.0.2.2/chat-api/public/api/messages/getHomeScreenMesssages");
-    print("Bearer $token");
+    // print("Bearer $token");
     var response = await client.get(
       uri,
       headers: {
@@ -153,6 +153,31 @@ class RemoteService {
       return messages;
     } else {
       throw "Error loading messages";
+    }
+  }
+
+  //mark message as read
+  Future<dynamic> markAllMessagesAsRead(String token, int roomId) async {
+    print(token);
+    var client = http.Client();
+    var uri = Uri.parse(
+        "http://10.0.2.2/chat-api/public/api/messages/$roomId/markAsRead");
+    var body = {
+      "unread": "0",
+    };
+    var response = await client.put(
+      uri,
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json',
+        "Authorization": "Bearer $token",
+      },
+      body: body,
+    );
+    if (response.statusCode == 200) {
+      return 1;
+    } else {
+      return response.statusCode;
     }
   }
 }

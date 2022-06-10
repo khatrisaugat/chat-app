@@ -26,6 +26,17 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     getMessagesfromARoom();
+    markAllMessagesAsRead();
+  }
+
+  //mark all messages as read
+  void markAllMessagesAsRead() async {
+    int updated = await RemoteService()
+        .markAllMessagesAsRead(widget.user.token, widget.roomId);
+    print(updated);
+    // if (updated == 0) {
+    //   throw "Error marking messages as read";
+    // }
   }
 
   getMessagesfromARoom() async {

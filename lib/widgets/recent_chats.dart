@@ -9,6 +9,21 @@ class RecentChats extends StatelessWidget {
   RecentChats({required this.messages, required this.user});
   final List<Message> messages;
   final User user;
+  getHoursAndMinutes(String time) {
+    if (time.isNotEmpty) {
+      String hour = time.substring(11, 13);
+      String minute = time.substring(14, 16);
+      String ampm = "AM";
+      //convert to 12 hour format
+      if (int.parse(hour.substring(0, 2)) > 12) {
+        ampm = "PM";
+        hour = (int.parse(hour.substring(0, 2)) - 12).toString();
+      }
+      return "$hour:$minute $ampm";
+    } else {
+      return "";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,13 +83,16 @@ class RecentChats extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      width: 16.0,
-                    ),
+                    // SizedBox(
+                    //   width: 16.0,
+                    // ),
                     Column(
                       children: [
-                        Text(chat.time),
-                        chat.unread
+                        Text(
+                          getHoursAndMinutes(chat.time),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        chat.unread && chat.sender.id != user.id
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10.0, vertical: 5.0),
